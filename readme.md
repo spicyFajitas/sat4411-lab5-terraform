@@ -11,3 +11,16 @@ vsphere_password   = "password"
 ```
 
 After running `terraform plan` and `terraform apply`, you'll need to manually go into the vCenter instance and delete the TinyCore-tf VM that is created as you can't run the script again without errors after the VM is created.
+
+## Commands
+
+```
+# initialize provider and terraform working folder
+terraform init
+
+# plan changes (make sure syntax is right)
+terraform plan
+
+# apply changes
+terraform apply
+```
