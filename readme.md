@@ -23,4 +23,18 @@ terraform plan
 
 # apply changes
 terraform apply
+
+# automatically approve changes
+terraform apply --auto-approve
+
+# remove vms managed by terraform
+terraform destroy
 ```
+
+## Issues
+
+Guest OS has to be "Other Linux 32 Bit"
+
+## Miscellaneous
+
+Adjust count in vm resources to adjust number of VMs created
