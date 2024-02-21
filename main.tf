@@ -28,29 +28,18 @@ data "vsphere_network" "network" {
     name          = "VM Network"
     datacenter_id = data.vsphere_datacenter.dc.id
   }
-#Name of the Templete in the vCenter, which will be used to the deployment
+
+#Name of the Template in the vCenter, which will be used to the deployment
 data "vsphere_virtual_machine" "vm" {
     name          = "TinyCore Template"
     datacenter_id = data.vsphere_datacenter.dc.id
   }
 
-#Defining Content Library of ISO
-resource "vsphere_content_library" "library" {
-  name = "ISOs"
-  storage_backing = [data.vsphere_datastore.datastore.id]
+data "vsphere_content_library_item" "item" {
+  name       = "TinyCore Template"
+  type       = "vm-template"
+  library_id = data.vsphere_virtual_machine.vm.id
 }
-
-# data "vsphere_content_library_item" "item" {
-#   name       = "TinyCore Template"
-#   type       = "vm-template"
-#   library_id = data.vsphere_content_library.name
-# }
-
-# data "vsphere_content_library_item" "item" {
-#   name       = "TinyCore-14.0"
-#   type       = "iso"
-#   library_id = data.vsphere_content_library_item.id
-# }
 
 #Set VM parameteres
   resource "vsphere_virtual_machine" "TinyCore-tf" {
@@ -73,12 +62,12 @@ resource "vsphere_content_library" "library" {
       size             = 1
     }
 
-    # cdrom {
-    #   datastore_id = data.vsphere_content_library_item.item
-    # }
+    cdrom {
+      datastore_id = data.vsphere_datastore.datastore.id
+    }
   
-#     clone {
-#       template_uuid = "TinyCore Template"
+    clone {
+      template_uuid       = data.vsphere_virtual_machine.vm.id
 # Linux_options are required section, while deploying Linux virtual machines
 #       customize {
 #         linux_options {
@@ -94,7 +83,7 @@ resource "vsphere_content_library" "library" {
 #         dns_server_list = ["172.20.188.1"]
 #         dns_suffix_list = ["local.cnsanet"]
 #       }
-#     }
+    }
   }
 # #Outup section will display vsphere_virtual_machine.ubu-testing Name and IP Address
 # output "VM_Name" {
