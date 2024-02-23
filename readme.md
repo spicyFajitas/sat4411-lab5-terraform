@@ -1,5 +1,7 @@
 # SAT 4411 Lab 5 - Terraform and VM Automation
 
+This is the documentation for this lab
+
 Right now the files are in a good state to where you can run the plan and apply commands and they will run without errors. You'll have to create a `terraform.tfvars` file and add in the credentials for the vCenter instance.
 
 ```tf
